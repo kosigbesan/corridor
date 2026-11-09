@@ -6,151 +6,140 @@
 <title>Corridor, product</title>
 <style>
   :root{
-    --paper:#F4EEE3; --paper2:#FBF7F0; --paper3:#ECE4D5;
-    --ink:#191410; --ink2:#3B332A; --muted:#6E6455;
-    --hair:#D2C7B1; --hair2:#E3DAC8;
-    --rust:#A8441B; --rust2:#C4693E; --green:#27503B;
+    --paper:#F2EBDD; --paper2:#FBF6EC; --paper3:#E7DECD;
+    --ink:#15110C; --ink2:#332C23; --muted:#6B6152;
+    --hair:#CFC3AC; --hair2:#E2D8C4;
+    --rust:#BE4318; --rust2:#D9643A; --green:#1F4A34;
+    --cream:#F6F0E4;
     --serif:Georgia,"Palatino Linotype",serif;
     --sans:"Segoe UI",system-ui,-apple-system,sans-serif;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
-  body{
-    background:var(--paper); color:var(--ink);
-    font-family:var(--sans); font-size:13.5px; line-height:1.5;
-    -webkit-font-smoothing:antialiased;
-  }
-  body::after{
-    content:""; position:fixed; inset:0; pointer-events:none; z-index:9999; opacity:.03;
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+       font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.032;
     mix-blend-mode:multiply;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
   .serif{font-family:var(--serif);}
   .tnum{font-variant-numeric:tabular-nums;}
 
-  /* shell */
-  .app{display:grid;grid-template-columns:238px 1fr;grid-template-rows:58px 1fr;
-       grid-template-areas:"top top" "rail main"; min-height:100vh;}
+  .app{display:grid;grid-template-columns:250px 1fr;grid-template-rows:64px 1fr;
+       grid-template-areas:"top top" "rail main";min-height:100vh;}
+
+  /* dark top bar */
   .top{grid-area:top;display:flex;align-items:center;justify-content:space-between;
-       padding:0 26px;border-bottom:1px solid var(--hair);background:var(--paper2);}
-  .brand{display:flex;align-items:baseline;gap:12px;}
-  .brand .wm{font-family:var(--serif);font-size:19px;letter-spacing:.14em;}
-  .brand .wm b{color:var(--rust);font-weight:normal;}
-  .brand .tag{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);
-              border-left:1px solid var(--hair);padding-left:12px;}
-  .top .ctl{display:flex;align-items:center;gap:20px;font-size:12px;color:var(--muted);}
-  .seg{display:flex;border:1px solid var(--hair);}
-  .seg span{padding:5px 12px;font-size:11.5px;}
-  .seg span.on{background:var(--ink);color:var(--paper);}
+       padding:0 28px;background:var(--ink);color:var(--cream);}
+  .brand{display:flex;align-items:baseline;gap:14px;}
+  .brand .wm{font-family:var(--serif);font-size:21px;letter-spacing:.16em;}
+  .brand .wm b{color:var(--rust2);font-weight:normal;}
+  .brand .tag{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;
+              color:rgba(246,240,228,.55);border-left:1px solid rgba(246,240,228,.25);padding-left:14px;}
+  .top .ctl{display:flex;align-items:center;gap:22px;font-size:12px;color:rgba(246,240,228,.7);}
+  .seg{display:flex;border:1px solid rgba(246,240,228,.28);}
+  .seg span{padding:5px 13px;font-size:11.5px;}
+  .seg span.on{background:var(--cream);color:var(--ink);}
   .btn{background:var(--rust);color:#fff;border:0;font-family:var(--sans);font-size:12px;
-       letter-spacing:.04em;padding:8px 16px;cursor:pointer;}
-  .btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink);}
+       letter-spacing:.06em;padding:9px 18px;cursor:pointer;text-transform:uppercase;}
 
   /* rail */
   .rail{grid-area:rail;border-right:1px solid var(--hair);background:var(--paper2);
-        padding:22px 0;display:flex;flex-direction:column;}
-  .rail .sect{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);
-              padding:0 22px 10px;}
+        padding:24px 0;display:flex;flex-direction:column;}
+  .rail .sect{font-size:9.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);padding:0 24px 12px;}
   .nav{list-style:none;margin:0 0 8px;padding:0;}
   .nav button{width:100%;text-align:left;background:none;border:0;cursor:pointer;
-    font-family:var(--sans);font-size:13px;color:var(--ink2);padding:10px 22px;
-    display:flex;gap:12px;align-items:baseline;border-left:2px solid transparent;}
-  .nav button .fn{font-family:var(--serif);font-size:10.5px;color:#B9AD95;width:16px;}
-  .nav button:hover{background:rgba(25,20,16,.035);}
-  .nav button.on{color:var(--ink);border-left:2px solid var(--rust);background:rgba(168,68,27,.055);font-weight:600;}
+    font-family:var(--sans);font-size:13.5px;color:var(--ink2);padding:11px 24px;
+    display:flex;gap:13px;align-items:baseline;border-left:3px solid transparent;}
+  .nav button .fn{font-family:var(--serif);font-size:11px;color:#B6A98F;width:16px;}
+  .nav button:hover{background:rgba(21,17,12,.04);}
+  .nav button.on{color:var(--ink);border-left:3px solid var(--rust);background:rgba(190,67,24,.07);font-weight:600;}
   .nav button.on .fn{color:var(--rust);}
-  .rail .foot{margin-top:auto;padding:16px 22px 0;border-top:1px solid var(--hair);font-size:11px;color:var(--muted);}
-  .dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:7px;}
+  .rail .foot{margin-top:auto;padding:18px 24px 0;border-top:1px solid var(--hair);font-size:11px;color:var(--muted);}
+  .dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:8px;}
 
   /* main */
-  .main{grid-area:main;padding:26px 34px 60px;max-width:1180px;}
+  .main{grid-area:main;padding:30px 40px 70px;max-width:1240px;}
   .head{display:flex;justify-content:space-between;align-items:flex-end;
-        border-bottom:1px solid var(--hair);padding-bottom:14px;}
-  .head .eb{font-family:var(--serif);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--rust);}
-  .head h1{font-family:var(--serif);font-weight:normal;font-size:27px;margin:6px 0 0;letter-spacing:-.01em;}
-  .head .hm{text-align:right;font-size:11px;color:var(--muted);letter-spacing:.03em;line-height:1.7;}
+        border-bottom:3px solid var(--ink);padding-bottom:16px;}
+  .head .eb{font-family:var(--serif);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--rust);}
+  .head h1{font-family:var(--serif);font-weight:normal;font-size:38px;margin:8px 0 0;letter-spacing:-.02em;line-height:1.05;}
+  .head .hm{text-align:right;font-size:11px;color:var(--muted);letter-spacing:.03em;line-height:1.75;}
   .view{display:none;} .view.on{display:block;}
 
-  /* kpi band */
+  /* kpis */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--hair);}
-  .kpi{padding:20px 22px 18px 0;border-right:1px solid var(--hair2);}
+  .kpi{padding:24px 24px 20px 0;border-right:1px solid var(--hair2);}
   .kpi:last-child{border-right:0;}
-  .kpi .v{font-family:var(--serif);font-size:38px;line-height:1;letter-spacing:-.02em;}
-  .kpi .v .u{font-family:var(--sans);font-size:14px;color:var(--muted);margin-left:5px;}
-  .kpi .l{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted);margin-top:9px;}
-  .kpi .s{font-size:11.5px;color:var(--muted);margin-top:3px;}
-  .delta{font-size:11.5px;font-weight:600;}
+  .kpi .v{font-family:var(--serif);font-size:52px;line-height:.95;letter-spacing:-.03em;}
+  .kpi .v .u{font-family:var(--sans);font-size:14px;color:var(--muted);margin-left:6px;letter-spacing:0;}
+  .kpi .l{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:12px;}
+  .kpi .s{font-size:11.5px;color:var(--muted);margin-top:4px;}
+  .delta{font-size:12px;font-weight:700;}
   .delta.dn{color:var(--green);} .delta.up{color:var(--rust);}
 
-  /* columns */
-  .cols{display:grid;grid-template-columns:1.45fr 1fr;gap:38px;margin-top:28px;}
-  .panel{margin-bottom:30px;}
-  .panel h3{font-family:var(--serif);font-weight:normal;font-size:16px;margin:0 0 3px;}
-  .panel .cap{font-size:11.5px;color:var(--muted);margin-bottom:16px;}
+  .cols{display:grid;grid-template-columns:1.5fr 1fr;gap:44px;margin-top:34px;}
+  .panel{margin-bottom:36px;}
+  .panel h3{font-family:var(--serif);font-weight:normal;font-size:20px;margin:0 0 3px;}
+  .panel .cap{font-size:12px;color:var(--muted);margin-bottom:18px;}
 
-  /* bars */
-  .bar{display:grid;grid-template-columns:140px 1fr 84px;gap:14px;align-items:center;margin-bottom:12px;font-size:12.5px;}
-  .track{height:13px;background:var(--paper3);position:relative;}
+  .bar{display:grid;grid-template-columns:150px 1fr 88px;gap:16px;align-items:center;margin-bottom:14px;font-size:13px;}
+  .track{height:16px;background:var(--paper3);position:relative;}
   .fill{height:100%;background:var(--ink);}
-  .fill.rust{background:var(--rust);} .fill.green{background:var(--green);}
-  .fill.pale{background:var(--rust2);}
+  .fill.rust{background:var(--rust);} .fill.green{background:var(--green);} .fill.pale{background:var(--rust2);}
   .bar .val{text-align:right;color:var(--ink2);}
 
-  /* stacked modal bar */
-  .stack{display:flex;height:26px;border:1px solid var(--hair);margin:4px 0 14px;}
+  .stack{display:flex;height:34px;margin:4px 0 16px;}
   .stack i{display:block;height:100%;}
-  .legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:11.5px;color:var(--muted);}
-  .legend span{display:flex;align-items:center;gap:7px;}
-  .sw{width:10px;height:10px;display:inline-block;}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:12px;color:var(--muted);}
+  .legend span{display:flex;align-items:center;gap:8px;}
+  .sw{width:11px;height:11px;display:inline-block;}
 
-  /* table */
-  table.t{width:100%;border-collapse:collapse;font-size:12.5px;}
-  table.t th{text-align:left;font-weight:600;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
-             color:var(--muted);padding:0 12px 9px 0;border-bottom:1px solid var(--ink);}
-  table.t td{padding:10px 12px 10px 0;border-bottom:1px solid var(--hair2);vertical-align:top;}
+  table.t{width:100%;border-collapse:collapse;font-size:13px;}
+  table.t th{text-align:left;font-weight:700;font-size:10px;letter-spacing:.11em;text-transform:uppercase;
+             color:var(--muted);padding:0 12px 10px 0;border-bottom:2px solid var(--ink);}
+  table.t td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair2);vertical-align:top;}
   table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums;padding-right:0;}
-  .tag{display:inline-block;font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;
-       padding:2px 7px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap;}
-  .tag.p{color:var(--green);border-color:#8FAE9B;}
-  .tag.s{color:var(--rust);border-color:#D6A98C;}
+  .tag{display:inline-block;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
+       padding:3px 8px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap;}
+  .tag.p{color:var(--green);border-color:#7FA189;}
+  .tag.s{color:var(--rust);border-color:#DCA07E;}
 
-  /* note */
-  .note{border:1px solid var(--hair);background:var(--paper2);padding:16px 18px;margin-bottom:16px;}
-  .note h4{font-family:var(--serif);font-weight:normal;font-size:14px;margin:0 0 7px;}
-  .note p{margin:0 0 9px;font-size:12.5px;color:var(--muted);}
+  .note{border:1px solid var(--hair);background:var(--paper2);padding:18px 20px;margin-bottom:18px;}
+  .note h4{font-family:var(--serif);font-weight:normal;font-size:15px;margin:0 0 8px;}
+  .note p{margin:0 0 10px;font-size:12.5px;color:var(--muted);}
   .note p:last-child{margin-bottom:0;}
-  .callout{border-left:2px solid var(--rust);padding:2px 0 2px 16px;margin-bottom:18px;}
-  .callout .ct{font-family:var(--serif);font-size:14.5px;}
-  .callout .cb{font-size:12px;color:var(--muted);margin-top:5px;}
+  .callout{border-left:4px solid var(--rust);padding:2px 0 2px 18px;margin-bottom:20px;}
+  .callout .ct{font-family:var(--serif);font-size:16px;}
+  .callout .cb{font-size:12.5px;color:var(--muted);margin-top:6px;}
 
-  /* checklist */
-  .chk{list-style:none;margin:0;padding:0;font-size:12.5px;}
-  .chk li{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid var(--hair2);}
-  .chk li b{font-weight:600;}
+  .chk{list-style:none;margin:0;padding:0;font-size:13px;}
+  .chk li{display:flex;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--hair2);}
+  .chk li b{font-weight:700;}
   .chk .yes{color:var(--green);}
 
-  /* switch */
-  .switch{display:inline-flex;border:1px solid var(--ink);margin:0 0 18px;}
-  .switch button{background:none;border:0;font-family:var(--sans);font-size:11.5px;
-                 padding:6px 15px;cursor:pointer;color:var(--ink);letter-spacing:.03em;}
-  .switch button.on{background:var(--ink);color:var(--paper);}
+  .switch{display:inline-flex;border:2px solid var(--ink);margin:0 0 20px;}
+  .switch button{background:none;border:0;font-family:var(--sans);font-size:12px;font-weight:600;
+                 padding:8px 18px;cursor:pointer;color:var(--ink);letter-spacing:.04em;}
+  .switch button.on{background:var(--ink);color:var(--cream);}
 
-  /* tiers */
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);}
-  .tier{padding:22px 24px 26px;border-right:1px solid var(--hair2);}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);border-top:3px solid var(--ink);}
+  .tier{padding:26px 26px 30px;border-right:1px solid var(--hair2);}
   .tier:last-child{border-right:0;}
-  .tier.hi{background:var(--paper2);}
-  .tier .tn{font-family:var(--serif);font-size:18px;}
-  .tier .tp{font-family:var(--serif);font-size:29px;margin:14px 0 2px;letter-spacing:-.02em;}
-  .tier .tp small{font-family:var(--sans);font-size:11.5px;color:var(--muted);}
-  .tier .tu{font-size:11.5px;color:var(--muted);min-height:44px;}
-  .tier ul{list-style:none;margin:14px 0 0;padding:0;font-size:12.5px;}
-  .tier li{padding:7px 0;border-bottom:1px solid var(--hair2);}
+  .tier.hi{background:var(--ink);color:var(--cream);}
+  .tier.hi .tn,.tier.hi .tp{color:var(--cream);}
+  .tier.hi .tu,.tier.hi li{color:rgba(246,240,228,.72);}
+  .tier.hi li{border-color:rgba(246,240,228,.18);}
+  .tier.hi li::before{color:var(--rust2);}
+  .tier .tn{font-family:var(--serif);font-size:20px;}
+  .tier .tp{font-family:var(--serif);font-size:40px;margin:16px 0 4px;letter-spacing:-.03em;}
+  .tier .tp small{font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:0;}
+  .tier .tu{font-size:12px;color:var(--muted);min-height:46px;}
+  .tier ul{list-style:none;margin:16px 0 0;padding:0;font-size:12.5px;}
+  .tier li{padding:8px 0;border-bottom:1px solid var(--hair2);}
   .tier li::before{content:"+ ";color:var(--rust);}
 
-  .eyebrow{font-family:var(--serif);font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);}
-  .lead{font-family:var(--serif);font-size:17px;line-height:1.5;max-width:780px;margin:16px 0 6px;}
-  .hint{font-size:11.5px;color:var(--muted);}
+  .lead{font-family:var(--serif);font-size:21px;line-height:1.45;max-width:820px;margin:20px 0 6px;}
+  .hint{font-size:12px;color:var(--muted);}
 </style>
 </head>
 <body>
@@ -179,44 +168,24 @@
     </ul>
     <div class="foot">
       <div><span class="dot"></span>Live, synced 6 min ago</div>
-      <div style="margin-top:6px;">2,400 employees<br>14 entities, 9 countries</div>
-      <div style="margin-top:10px;color:#B9AD95;">Product mockup<br>Illustrative data</div>
+      <div style="margin-top:7px;">2,400 employees<br>14 entities, 9 countries</div>
+      <div style="margin-top:12px;color:#B6A98F;">Product mockup<br>Illustrative data</div>
     </div>
   </aside>
 
   <main class="main">
 
-    <!-- OVERVIEW -->
     <section class="view on" id="ov">
       <div class="head">
-        <div>
-          <div class="eb">01 / Overview</div>
-          <h1>The people-movement carbon ledger</h1>
-        </div>
+        <div><div class="eb">01 / Overview</div><h1>The people-movement carbon ledger</h1></div>
         <div class="hm">Reporting year FY2026<br>GHG Protocol Scope 3<br>DEFRA 2026, ICAO, IATA factors</div>
       </div>
 
       <div class="kpis">
-        <div class="kpi">
-          <div class="v tnum">4,318<span class="u">tCO2e</span></div>
-          <div class="l">Cat 6 + Cat 7</div>
-          <div class="s"><span class="delta dn">8.4%</span> vs FY25</div>
-        </div>
-        <div class="kpi">
-          <div class="v tnum">71<span class="u">%</span></div>
-          <div class="l">Primary data</div>
-          <div class="s">Tier 1 and 2, not spend-based</div>
-        </div>
-        <div class="kpi">
-          <div class="v tnum">507<span class="u">kg</span></div>
-          <div class="l">ACEL per employee</div>
-          <div class="s">Commute, kg CO2e per person / yr</div>
-        </div>
-        <div class="kpi">
-          <div class="v tnum">2027<span class="u">window</span></div>
-          <div class="l">SB 253 Scope 3</div>
-          <div class="s">Cat 6 and 7 among five mandated</div>
-        </div>
+        <div class="kpi"><div class="v tnum">4,318<span class="u">tCO2e</span></div><div class="l">Cat 6 + Cat 7</div><div class="s"><span class="delta dn">8.4%</span> vs FY25</div></div>
+        <div class="kpi"><div class="v tnum">71<span class="u">%</span></div><div class="l">Primary data</div><div class="s">Tier 1 and 2, not spend-based</div></div>
+        <div class="kpi"><div class="v tnum">507<span class="u">kg</span></div><div class="l">ACEL per employee</div><div class="s">Commute, kg CO2e per person / yr</div></div>
+        <div class="kpi"><div class="v tnum">2027<span class="u">window</span></div><div class="l">SB 253 Scope 3</div><div class="s">Cat 6 and 7 among five mandated</div></div>
       </div>
 
       <div class="cols">
@@ -232,7 +201,6 @@
             <div class="bar"><span>Bus, metro, active</span><div class="track"><div class="fill" style="width:6%"></div></div><span class="val tnum">163</span></div>
             <div class="bar"><span>Homeworking</span><div class="track"><div class="fill green" style="width:3%"></div></div><span class="val tnum">80</span></div>
           </div>
-
           <div class="panel">
             <h3>Top movers this quarter</h3>
             <table class="t">
@@ -245,30 +213,27 @@
             </table>
           </div>
         </div>
-
         <div>
           <div class="panel">
             <h3>Run rate against target</h3>
             <div class="cap">Monthly total, tCO2e, versus the 2030 trajectory.</div>
-            <svg viewBox="0 0 560 190" width="100%" height="190" role="img" aria-label="Monthly emissions trend against target">
-              <line x1="40" y1="160" x2="545" y2="160" stroke="#D2C7B1"/>
-              <line x1="40" y1="80" x2="545" y2="80" stroke="#A8441B" stroke-dasharray="5 5" stroke-width="1"/>
-              <line x1="428" y1="13" x2="460" y2="13" stroke="#A8441B" stroke-dasharray="5 5"/>
-              <text x="468" y="17" font-family="Georgia,serif" font-size="11" fill="#A8441B">2030 trajectory</text>
-              <path d="M40,48 L111,52 L182,54 L253,59 L324,61 L395,65 L466,69 L537,74 L537,160 L40,160 Z" fill="rgba(25,20,16,.10)"/>
-              <polyline points="40,48 111,52 182,54 253,59 324,61 395,65 466,69 537,74" fill="none" stroke="#191410" stroke-width="2"/>
-              <circle cx="537" cy="74" r="3.5" fill="#A8441B"/>
-              <g font-family="Segoe UI,sans-serif" font-size="10" fill="#6E6455">
-                <text x="40" y="178">Jan</text><text x="182" y="178">Mar</text><text x="324" y="178">May</text><text x="466" y="178">Jul</text>
+            <svg viewBox="0 0 560 200" width="100%" height="200" role="img" aria-label="Monthly emissions trend against target">
+              <line x1="40" y1="170" x2="545" y2="170" stroke="#CFC3AC"/>
+              <line x1="428" y1="13" x2="462" y2="13" stroke="#BE4318" stroke-dasharray="6 5" stroke-width="1.5"/>
+              <text x="470" y="17" font-family="Georgia,serif" font-size="12" fill="#BE4318">2030 trajectory</text>
+              <line x1="40" y1="88" x2="545" y2="88" stroke="#BE4318" stroke-dasharray="6 5" stroke-width="1.5"/>
+              <path d="M40,52 L111,57 L182,59 L253,64 L324,66 L395,70 L466,74 L537,80 L537,170 L40,170 Z" fill="rgba(190,67,24,.13)"/>
+              <polyline points="40,52 111,57 182,59 253,64 324,66 395,70 466,74 537,80" fill="none" stroke="#15110C" stroke-width="3"/>
+              <circle cx="537" cy="80" r="5" fill="#BE4318"/>
+              <g font-family="Segoe UI,sans-serif" font-size="11" fill="#6B6152">
+                <text x="40" y="190">Jan</text><text x="182" y="190">Mar</text><text x="324" y="190">May</text><text x="466" y="190">Jul</text>
               </g>
             </svg>
           </div>
-
           <div class="callout">
             <div class="ct">The compliance trigger is live</div>
             <div class="cb">California SB 253 phases Scope 3 in from 2027. Business travel and employee commuting are two of only five mandated categories, with limited assurance. About 2,596 US companies above $1B revenue are in scope.</div>
           </div>
-
           <div class="note">
             <h4>Why these two categories</h4>
             <p>For most companies Cat 1 dwarfs everything. Travel and commuting are small by mass but high by control: the data sits in systems the company already owns, and behaviour moves the number inside a quarter.</p>
@@ -278,28 +243,21 @@
       </div>
     </section>
 
-    <!-- CAT 6 -->
     <section class="view" id="t6">
       <div class="head">
         <div><div class="eb">02 / Category 6, business travel</div><h1>Every trip, reconstructed</h1></div>
         <div class="hm">Distance-based, DEFRA 2026<br>Cabin scales the factor<br>RF basis fixed at inventory level</div>
       </div>
-
-      <div style="margin-top:20px;">
-        <div class="eyebrow" style="margin-bottom:8px;">Aviation radiative forcing basis</div>
-        <div class="switch" id="rfswitch">
-          <button class="on" data-rf="on">With RF</button>
-          <button data-rf="off">Without RF</button>
-        </div>
+      <div style="margin-top:24px;">
+        <div class="eb" style="margin-bottom:9px;">Aviation radiative forcing basis</div>
+        <div class="switch" id="rfswitch"><button class="on" data-rf="on">With RF</button><button data-rf="off">Without RF</button></div>
       </div>
-
       <div class="kpis">
         <div class="kpi"><div class="v tnum" id="t6total">3,102<span class="u">tCO2e</span></div><div class="l">Category 6 total</div><div class="s" id="t6sub">Air 78%, hotel 14%, ground 8%</div></div>
         <div class="kpi"><div class="v tnum" id="t6air">2,420<span class="u">t</span></div><div class="l">Air, incl. non-CO2</div><div class="s" id="t6airsub">1.7x on CO2, DEFRA 2026</div></div>
         <div class="kpi"><div class="v tnum">11,240<span class="u">trips</span></div><div class="l">Segments booked</div><div class="s">98% matched to itinerary</div></div>
         <div class="kpi"><div class="v tnum">$9.4<span class="u">m</span></div><div class="l">Travel spend</div><div class="s">$3,031 per tCO2e</div></div>
       </div>
-
       <div class="cols">
         <div>
           <div class="panel">
@@ -315,7 +273,7 @@
                 <tr><td>Paris to Lyon, return, rail</td><td>Standard</td><td class="num">860</td><td class="num">10</td></tr>
               </tbody>
             </table>
-            <div class="hint" style="margin-top:12px;">Spend-only lines fall back to EEIO factors and are tagged <span class="tag s">Secondary</span> in Assurance.</div>
+            <div class="hint" style="margin-top:14px;">Spend-only lines fall back to EEIO factors and are tagged <span class="tag s">Secondary</span> in Assurance.</div>
           </div>
         </div>
         <div>
@@ -331,46 +289,42 @@
             <div class="bar"><span>Premium</span><div class="track"><div class="fill" style="width:40%"></div></div><span class="val">1.6x</span></div>
             <div class="bar"><span>Business</span><div class="track"><div class="fill rust" style="width:72%"></div></div><span class="val">2.9x</span></div>
             <div class="bar"><span>First</span><div class="track"><div class="fill rust" style="width:100%"></div></div><span class="val">4.0x</span></div>
-            <div class="hint" style="margin-top:10px;">A cabin policy is the fastest lever, ahead of trip count.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- CAT 7 -->
     <section class="view" id="t7">
       <div class="head">
         <div><div class="eb">03 / Category 7, employee commuting</div><h1>Remote work rewrote this category</h1></div>
         <div class="hm">HRIS plus survey<br>7a commute, 7b homeworking<br>Distance-based where surveyed</div>
       </div>
-
       <div class="kpis">
         <div class="kpi"><div class="v tnum">1,216<span class="u">tCO2e</span></div><div class="l">Category 7 total</div><div class="s">7a 1,136 / 7b 80</div></div>
         <div class="kpi"><div class="v tnum">507<span class="u">kg</span></div><div class="l">ACEL per employee</div><div class="s">Average Commuter Emissions Level</div></div>
         <div class="kpi"><div class="v tnum">64<span class="u">%</span></div><div class="l">Survey coverage</div><div class="s">1,536 of 2,400 employees</div></div>
         <div class="kpi"><div class="v tnum">2.4<span class="u">days</span></div><div class="l">Office days / week</div><div class="s">Hybrid baseline</div></div>
       </div>
-
       <div class="cols">
         <div>
           <div class="panel">
             <h3>Modal split</h3>
             <div class="cap">Share of commutes, by mode.</div>
             <div class="stack">
-              <i style="width:58%;background:#191410"></i>
-              <i style="width:22%;background:#A8441B"></i>
-              <i style="width:9%;background:#C4693E"></i>
-              <i style="width:7%;background:#27503B"></i>
-              <i style="width:4%;background:#D2C7B1"></i>
+              <i style="width:58%;background:#15110C"></i>
+              <i style="width:22%;background:#BE4318"></i>
+              <i style="width:9%;background:#D9643A"></i>
+              <i style="width:7%;background:#1F4A34"></i>
+              <i style="width:4%;background:#CFC3AC"></i>
             </div>
             <div class="legend">
-              <span><i class="sw" style="background:#191410"></i>Drive alone 58%</span>
-              <span><i class="sw" style="background:#A8441B"></i>Rail 22%</span>
-              <span><i class="sw" style="background:#C4693E"></i>Bus 9%</span>
-              <span><i class="sw" style="background:#27503B"></i>Metro 7%</span>
-              <span><i class="sw" style="background:#D2C7B1"></i>Active 4%</span>
+              <span><i class="sw" style="background:#15110C"></i>Drive alone 58%</span>
+              <span><i class="sw" style="background:#BE4318"></i>Rail 22%</span>
+              <span><i class="sw" style="background:#D9643A"></i>Bus 9%</span>
+              <span><i class="sw" style="background:#1F4A34"></i>Metro 7%</span>
+              <span><i class="sw" style="background:#CFC3AC"></i>Active 4%</span>
             </div>
-            <div class="hint" style="margin-top:14px;">Drive-alone is 58% of commutes and most of the emissions. Parking policy moves it faster than any campaign.</div>
+            <div class="hint" style="margin-top:16px;">Drive-alone is 58% of commutes and most of the emissions. Parking policy moves it faster than any campaign.</div>
           </div>
         </div>
         <div>
@@ -387,20 +341,17 @@
               <li><span>Cost saved for staff</span><b class="tnum">$214k</b></li>
               <li><span>Verified interventions logged</span><b class="tnum">11</b></li>
             </ul>
-            <div class="hint" style="margin-top:12px;">Every intervention is tied to the emission delta it produced, so behaviour change becomes auditable.</div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ASSURANCE -->
     <section class="view" id="as">
       <div class="head">
         <div><div class="eb">04 / Assurance and provenance</div><h1>The trail behind the number</h1></div>
         <div class="hm">Limited assurance from 2027<br>Data tiers disclosed<br>Rebase test at 5%</div>
       </div>
-
-      <div class="cols" style="margin-top:26px;">
+      <div class="cols" style="margin-top:30px;">
         <div>
           <div class="panel">
             <h3>Data lineage by tier</h3>
@@ -444,63 +395,38 @@
           <div class="note">
             <h4>Why this is the moat</h4>
             <p>Anyone can show a number. The defensible product is the trail: factor versioning, restatement logic, and a rebase test that fires when a methodology change moves the total by more than 5%.</p>
-            <p>It is unglamorous, and it is what an assurer asks for first.</p>
-          </div>
-          <div class="note">
-            <h4>One number, many doors</h4>
-            <p>CSRD / ESRS E1 datapoints, SB 253 template, CDP, and a raw ledger API.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- PLAN / PRICING -->
     <section class="view" id="pr">
       <div class="head">
         <div><div class="eb">05 / Plan</div><h1>Priced on both units</h1></div>
         <div class="hm">Cat 7 is per employee<br>Cat 6 is per dollar booked<br>Grows with the emissions</div>
       </div>
-
       <div class="lead">The account grows the way the footprint does. A per-employee seat for commuting, a spend-linked tier for travel, and an assurance pack on top.</div>
-
-      <div class="tiers" style="margin-top:20px;">
+      <div class="tiers" style="margin-top:24px;">
         <div class="tier">
           <div class="tn serif">Ledger</div>
           <div class="tp">$2<small> / employee / yr</small></div>
-          <div class="tu">Entry, up to 500 staff. The annual number, both categories, audit trail.</div>
-          <ul>
-            <li>Cat 6 and Cat 7 calculation</li>
-            <li>DEFRA, ICAO, IATA factors</li>
-            <li>RF basis fixed and disclosed</li>
-            <li>CSRD and SB 253 export</li>
-          </ul>
+          <div class="tu">Entry, up to 500 staff. Both categories, audit trail.</div>
+          <ul><li>Cat 6 and Cat 7 calculation</li><li>DEFRA, ICAO, IATA factors</li><li>RF basis fixed and disclosed</li><li>CSRD and SB 253 export</li></ul>
         </div>
         <div class="tier hi">
           <div class="tn serif">Program</div>
           <div class="tp">$6<small> / employee / yr</small></div>
           <div class="tu">Mid-market, 500 to 10,000 staff. Live data and behaviour change.</div>
-          <ul>
-            <li>Concur, Amex GBT, Navan, HRIS feeds</li>
-            <li>Itinerary reconstruction engine</li>
-            <li>Commute survey and engagement layer</li>
-            <li>Intervention tracking, avoided emissions</li>
-            <li>Data-tier reporting, primary share</li>
-          </ul>
+          <ul><li>Concur, Amex GBT, Navan, HRIS feeds</li><li>Itinerary reconstruction engine</li><li>Commute survey and engagement layer</li><li>Data-tier reporting, primary share</li></ul>
         </div>
         <div class="tier">
           <div class="tn serif">Enterprise</div>
           <div class="tp">from $48k<small> / yr</small></div>
           <div class="tu">Multi-entity groups and assurance-grade disclosure. Plus API.</div>
-          <ul>
-            <li>Assurance pack and assurer workspace</li>
-            <li>Uncertainty, rebase, restatement logic</li>
-            <li>Ledger API into your warehouse</li>
-            <li>Entity-level consolidation</li>
-          </ul>
+          <ul><li>Assurance pack and assurer workspace</li><li>Uncertainty, rebase, restatement logic</li><li>Ledger API into your warehouse</li><li>Entity-level consolidation</li></ul>
         </div>
       </div>
-
-      <div class="cols" style="margin-top:30px;">
+      <div class="cols" style="margin-top:34px;">
         <div>
           <div class="panel">
             <h3>How the price compares</h3>
@@ -520,7 +446,6 @@
           <div class="note">
             <h4>The unit-economics wedge</h4>
             <p>Travel and commute budgets already exist and are already under cost pressure. Corridor is sold into travel and workplace ops, not the sustainability team, so it pays for itself through avoided trips and parking demand before the carbon value is counted.</p>
-            <p>Carbon is the reason to buy. Cost is the reason the budget holder signs.</p>
           </div>
         </div>
       </div>
