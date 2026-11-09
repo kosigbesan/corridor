@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Corridor, investor discussion</title>
+<style>
+  :root{
+    --paper:#F4EEE3; --paper2:#FBF7F0; --paper3:#ECE4D5;
+    --ink:#191410; --ink2:#3B332A; --muted:#6E6455;
+    --hair:#D2C7B1; --hair2:#E3DAC8;
+    --rust:#A8441B; --rust2:#C4693E; --green:#27503B;
+    --serif:Georgia,"Palatino Linotype",serif;
+    --sans:"Segoe UI",system-ui,-apple-system,sans-serif;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--sans);
+       font-size:14px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.03;
+    mix-blend-mode:multiply;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .serif{font-family:var(--serif);}
+  .tnum{font-variant-numeric:tabular-nums;}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 44px;}
+
+  /* running head */
+  .runhead{display:flex;justify-content:space-between;align-items:center;
+    padding:20px 0;border-bottom:1px solid var(--hair);font-size:11px;
+    letter-spacing:.16em;text-transform:uppercase;color:var(--muted);}
+  .runhead .wm{font-family:var(--serif);font-size:14px;letter-spacing:.22em;color:var(--ink);}
+  .runhead .wm b{color:var(--rust);font-weight:normal;}
+
+  /* cover */
+  .cover{padding:74px 0 60px;border-bottom:2px solid var(--ink);}
+  .cover .kick{font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--rust);}
+  .cover h1{font-family:var(--serif);font-weight:normal;font-size:54px;line-height:1.06;
+    letter-spacing:-.02em;margin:22px 0 0;max-width:900px;}
+  .cover .sub{font-family:var(--serif);font-size:19px;line-height:1.5;color:var(--ink2);
+    max-width:640px;margin:24px 0 0;}
+  .cover .foot{display:flex;gap:40px;margin-top:46px;font-size:11.5px;color:var(--muted);letter-spacing:.03em;}
+  .cover .foot b{display:block;font-family:var(--serif);font-size:12.5px;color:var(--ink);letter-spacing:0;font-weight:normal;}
+
+  /* section */
+  section{padding:56px 0 12px;border-bottom:1px solid var(--hair);}
+  .folio{display:flex;align-items:baseline;gap:16px;margin-bottom:26px;}
+  .folio .n{font-family:var(--serif);font-size:15px;color:var(--rust);letter-spacing:.1em;}
+  .folio .t{font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);}
+  .folio .rule{flex:1;height:1px;background:var(--hair);}
+  h2{font-family:var(--serif);font-weight:normal;font-size:36px;line-height:1.1;
+     letter-spacing:-.015em;margin:0 0 22px;max-width:820px;}
+  .body p{max-width:720px;margin:0 0 14px;color:var(--ink2);}
+  .body p .hl{background:linear-gradient(transparent 62%, rgba(168,68,27,.22) 62%);}
+
+  .split{display:grid;grid-template-columns:1.5fr 1fr;gap:52px;align-items:start;}
+  .aside{border-left:1px solid var(--hair);padding-left:26px;}
+  .aside .q{font-family:var(--serif);font-size:19px;line-height:1.45;}
+  .aside .qa{font-size:12px;color:var(--muted);margin-top:12px;}
+
+  .statgrid{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--hair);margin-top:30px;}
+  .stat{padding:22px 26px 22px 0;border-bottom:1px solid var(--hair2);border-right:1px solid var(--hair2);}
+  .stat:nth-child(2n){padding-left:26px;border-right:0;}
+  .stat .v{font-family:var(--serif);font-size:40px;line-height:1;letter-spacing:-.02em;}
+  .stat .v .u{font-family:var(--sans);font-size:15px;color:var(--muted);margin-left:6px;}
+  .stat .l{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-top:10px;}
+  .stat .s{font-size:12px;color:var(--muted);margin-top:4px;}
+
+  /* device */
+  .device{width:100%;max-width:960px;margin:8px auto 0;}
+  .device .bar{display:flex;align-items:center;gap:7px;padding:11px 14px;
+    border:1px solid var(--hair);background:var(--paper2);}
+  .device .bar i{width:9px;height:9px;border-radius:50%;background:var(--hair);}
+  .device .bar .url{margin-left:14px;font-size:11px;color:var(--muted);letter-spacing:.04em;
+    font-family:"Cascadia Mono",Consolas,monospace;}
+  .screen{position:relative;width:100%;aspect-ratio:1280/820;overflow:hidden;
+    border:1px solid var(--hair);border-top:0;background:var(--paper);}
+  .screen iframe{position:absolute;top:0;left:0;width:1280px;height:820px;border:0;
+    transform-origin:top left;transform:scale(var(--s,0.72));}
+  .cap3{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:30px;}
+  .cap3 div{border-top:1px solid var(--ink);padding-top:12px;}
+  .cap3 .h{font-family:var(--serif);font-size:15px;margin-bottom:6px;}
+  .cap3 p{margin:0;font-size:12.5px;color:var(--muted);}
+
+  /* tiers */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--ink);margin-top:8px;}
+  .tier{padding:22px 24px 26px;border-right:1px solid var(--hair2);}
+  .tier:last-child{border-right:0;}
+  .tier.hi{background:var(--paper2);}
+  .tier .tn{font-family:var(--serif);font-size:17px;}
+  .tier .tp{font-family:var(--serif);font-size:30px;margin:14px 0 3px;letter-spacing:-.02em;}
+  .tier .tp small{font-family:var(--sans);font-size:11.5px;color:var(--muted);}
+  .tier .tu{font-size:11.5px;color:var(--muted);min-height:46px;}
+  .tier ul{list-style:none;margin:14px 0 0;padding:0;font-size:12.5px;}
+  .tier li{padding:7px 0;border-bottom:1px solid var(--hair2);}
+  .tier li::before{content:"+ ";color:var(--rust);}
+
+  /* use of funds */
+  .funds{margin-top:26px;border-top:1px solid var(--hair);}
+  .fund{display:grid;grid-template-columns:200px 1fr 62px;gap:18px;align-items:center;
+    padding:13px 0;border-bottom:1px solid var(--hair2);font-size:13px;}
+  .fund .bar{height:12px;background:var(--paper3);}
+  .fund .bar i{display:block;height:100%;background:var(--ink);}
+  .fund .pct{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2);}
+
+  .road{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--ink);margin-top:8px;}
+  .road .ph{padding:20px 22px;border-right:1px solid var(--hair2);}
+  .road .ph:last-child{border-right:0;}
+  .road .ph .when{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--rust);}
+  .road .ph .h{font-family:var(--serif);font-size:15px;margin:8px 0 8px;}
+  .road .ph p{margin:0;font-size:12px;color:var(--muted);}
+
+  .quote{border-left:2px solid var(--rust);padding:4px 0 4px 22px;margin:28px 0 0;max-width:760px;}
+  .quote .q{font-family:var(--serif);font-size:23px;line-height:1.4;}
+
+  .endfoot{display:flex;justify-content:space-between;align-items:flex-end;padding:34px 0 70px;font-size:11px;color:var(--muted);}
+  .endfoot .big{font-family:var(--serif);font-size:24px;letter-spacing:.2em;color:var(--ink);}
+  .endfoot .big b{color:var(--rust);font-weight:normal;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="runhead">
+    <span class="wm">CORRI<b>DOR</b></span>
+    <span>Investor discussion &middot; Confidential</span>
+  </div>
+
+  <!-- COVER -->
+  <div class="cover">
+    <div class="kick">Scope 3, categories 6 and 7</div>
+    <h1>The system of record for the two emissions categories a company can actually see.</h1>
+    <p class="sub">Business travel and employee commuting, measured continuously, priced on both units, and built for limited assurance.</p>
+    <div class="foot">
+      <span>Category<b>Business travel, Cat 6</b></span>
+      <span>Category<b>Employee commuting, Cat 7</b></span>
+      <span>Mandate<b>SB 253 Scope 3, 2027</b></span>
+      <span>Status<b>Seed, product complete</b></span>
+    </div>
+  </div>
+
+  <!-- 01 PROBLEM -->
+  <section>
+    <div class="folio"><span class="n">01</span><span class="t">The problem</span><span class="rule"></span></div>
+    <h2>Two categories nobody owns</h2>
+    <div class="split">
+      <div class="body">
+        <p>For most companies the largest Scope 3 number is purchased goods. But the two categories with the <span class="hl">least ownership and the most available data</span> are business travel and employee commuting.</p>
+        <p>Sustainability teams report them once a year from a spreadsheet. Travel managers own the spend but not the number. HR owns the commute but not the reporting. Nobody holds the thread between them.</p>
+        <p>Meanwhile the data already exists, in expense platforms, booking tools and HR systems the company runs today. It has simply never been assembled.</p>
+      </div>
+      <div class="aside">
+        <div class="q serif">Only about 37% of large firms disclose business travel at all, and roughly the same share set a travel-specific target.</div>
+        <div class="qa">The category is under-served by attention, not over-served by tools.</div>
+      </div>
+    </div>
+    <div class="statgrid">
+      <div class="stat"><div class="v tnum">53<span class="u">%</span></div><div class="l">Of the footprint, consulting</div><div class="s">Business travel as a share of total emissions</div></div>
+      <div class="stat"><div class="v tnum">36<span class="u">%</span></div><div class="l">Of the footprint, finance</div><div class="s">Banking and insurance travel intensity</div></div>
+      <div class="stat"><div class="v tnum">37<span class="u">%</span></div><div class="l">Disclose travel today</div><div class="s">Of large firms reporting any Scope 3</div></div>
+      <div class="stat"><div class="v tnum">$1.57<span class="u">T</span></div><div class="l">Global corporate travel, 2025</div><div class="s">GBTA forecast, up 6.6% year on year</div></div>
+    </div>
+  </section>
+
+  <!-- 02 INSIGHT -->
+  <section>
+    <div class="folio"><span class="n">02</span><span class="t">The insight</span><span class="rule"></span></div>
+    <h2>The categories a company both causes and can see</h2>
+    <div class="quote"><div class="q serif">Most carbon data is estimated from spend. These two categories arrive as itineraries, addresses and office days. That makes them measurable, movable, and from 2027, mandatory.</div></div>
+    <div class="cap3" style="margin-top:38px;">
+      <div>
+        <div class="h">A mandate, not a choice</div>
+        <p>California SB 253 phases Scope 3 in from 2027 with business travel and commuting among only five required categories, and limited assurance on top.</p>
+      </div>
+      <div>
+        <div class="h">A lever that moves fast</div>
+        <p>Cabin policy, trip substitution and office-day patterns change the number within a quarter. No other Scope 3 category responds this quickly.</p>
+      </div>
+      <div>
+        <div class="h">Data the company owns</div>
+        <p>The feeds sit in systems already paid for. Nothing new has to be procured to start measuring, only assembled.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 PRODUCT -->
+  <section>
+    <div class="folio"><span class="n">03</span><span class="t">The product</span><span class="rule"></span></div>
+    <h2>One ledger, both categories, live</h2>
+    <div class="body"><p>Corridor sits between the expense, travel, HR and badge feeds on one side and the disclosure platforms on the other, and owns the two categories end to end. The screen below is the product itself, not a picture of it.</p></div>
+    <div class="device">
+      <div class="bar"><i></i><i></i><i></i><span class="url">corridor.app / overview</span></div>
+      <div class="screen"><iframe id="live" src="app.html" title="Corridor product mockup"></iframe></div>
+    </div>
+    <div class="cap3">
+      <div><div class="h">Reconstruction</div><p>Turns a card line into route, cabin and haul band, so a spend figure becomes a distance-based number.</p></div>
+      <div><div class="h">Behaviour</div><p>Employee engagement tied to the emission delta each intervention produced, so change is auditable.</p></div>
+      <div><div class="h">Assurance</div><p>Factor provenance, data tiers and a rebase test, ready for the limited assurance that arrives with 2027.</p></div>
+    </div>
+  </section>
+
+  <!-- 04 MARKET -->
+  <section>
+    <div class="folio"><span class="n">04</span><span class="t">The market</span><span class="rule"></span></div>
+    <h2>A compliance mandate with a large, reachable list</h2>
+    <div class="split">
+      <div class="body">
+        <p>Two demand curves meet here. A regulatory one, where thousands of companies must produce an audit-ready number for these categories, and an operational one, where travel and workplace teams already spend against the levers that move it.</p>
+        <p>The beachhead is professional services and financial services, where travel is 25 to 53% of the footprint and the buyer already cares.</p>
+      </div>
+      <div class="aside">
+        <div class="q serif">About 2,596 US companies fall in scope of SB 253 alone, before CSRD reporters are counted.</div>
+        <div class="qa">Plus every employer with a commute to measure.</div>
+      </div>
+    </div>
+    <div class="statgrid">
+      <div class="stat"><div class="v tnum">2,596</div><div class="l">In SB 253 scope</div><div class="s">US companies above $1B revenue doing business in California</div></div>
+      <div class="stat"><div class="v tnum">5</div><div class="l">Mandated Scope 3 categories</div><div class="s">Cat 6 and Cat 7 are two of them</div></div>
+      <div class="stat"><div class="v tnum">25<span class="u">to 53%</span></div><div class="l">Travel share of footprint</div><div class="s">Consulting, finance, professional services</div></div>
+      <div class="stat"><div class="v tnum">2027</div><div class="l">First filing year</div><div class="s">Limited assurance required</div></div>
+    </div>
+  </section>
+
+  <!-- 05 BUSINESS MODEL -->
+  <section>
+    <div class="folio"><span class="n">05</span><span class="t">Business model</span><span class="rule"></span></div>
+    <h2>Priced on both units, so the account grows with the footprint</h2>
+    <div class="tiers">
+      <div class="tier">
+        <div class="tn">Ledger</div>
+        <div class="tp">$2<small> / employee / yr</small></div>
+        <div class="tu">Entry, up to 500 staff. The annual number, both categories, audit trail.</div>
+        <ul><li>Cat 6 and Cat 7 calculation</li><li>DEFRA, ICAO, IATA factors</li><li>RF basis fixed and disclosed</li><li>CSRD and SB 253 export</li></ul>
+      </div>
+      <div class="tier hi">
+        <div class="tn">Program</div>
+        <div class="tp">$6<small> / employee / yr</small></div>
+        <div class="tu">Mid-market, 500 to 10,000 staff. Live data and behaviour change.</div>
+        <ul><li>Concur, Amex GBT, Navan, HRIS feeds</li><li>Itinerary reconstruction engine</li><li>Commute survey and engagement layer</li><li>Data-tier reporting, primary share</li></ul>
+      </div>
+      <div class="tier">
+        <div class="tn">Enterprise</div>
+        <div class="tp">from $48k<small> / yr</small></div>
+        <div class="tu">Multi-entity groups and assurance-grade disclosure. Plus API.</div>
+        <ul><li>Assurance pack and assurer workspace</li><li>Uncertainty, rebase, restatement logic</li><li>Ledger API into your warehouse</li><li>Entity-level consolidation</li></ul>
+      </div>
+    </div>
+    <div class="body" style="margin-top:30px;">
+      <p>The wedge is cost before carbon. Travel and workplace budgets already exist and are already under pressure, so Corridor pays for itself through avoided trips and parking demand before the sustainability value is counted.</p>
+    </div>
+  </section>
+
+  <!-- 06 MOAT -->
+  <section>
+    <div class="folio"><span class="n">06</span><span class="t">The moat</span><span class="rule"></span></div>
+    <h2>Anyone can show a number. We keep the trail behind it</h2>
+    <div class="cap3" style="margin-top:14px;">
+      <div><div class="h">Reconstruction engine</div><p>The card-line-to-itinerary step is the hard build and the reason a spend figure can be defended as distance-based.</p></div>
+      <div><div class="h">Assurance trail</div><p>Factor versioning, data tiers, uncertainty and a rebase test. It is what an assurer asks for first, and it is hard to rip out.</p></div>
+      <div><div class="h">Connector network</div><p>Navan, Concur, Amex GBT and HRIS together. No single travel platform owns the cross-system view these two categories require.</p></div>
+    </div>
+    <div class="quote" style="margin-top:34px;"><div class="q serif">The incumbents sell dashboards. The mandate in 2027 asks for evidence.</div></div>
+  </section>
+
+  <!-- 07 BUILD ORDER -->
+  <section>
+    <div class="folio"><span class="n">07</span><span class="t">Build order</span><span class="rule"></span></div>
+    <h2>Ship where a customer can authorise their own data</h2>
+    <div class="road">
+      <div class="ph"><div class="when">Now</div><div class="h">Self-serve feeds</div><p>Navan and Concur, plus HRIS. A customer authorises their own data with no partnership, so a live pilot lands in days.</p></div>
+      <div class="ph"><div class="when">Next</div><div class="h">Amex GBT</div><p>Approved developer app. The long pole is commercial, not technical, so it starts early and runs in parallel.</p></div>
+      <div class="ph"><div class="when">Then</div><div class="h">GDS depth</div><p>Raw PNR reached through an aggregator, until booking volume justifies a direct contract with a GDS.</p></div>
+      <div class="ph"><div class="when">Then</div><div class="h">Assurance and API</div><p>The assurer workspace and the ledger API, turning the product into infrastructure for other platforms.</p></div>
+    </div>
+  </section>
+
+  <!-- 08 ASK -->
+  <section style="border-bottom:0;">
+    <div class="folio"><span class="n">08</span><span class="t">The ask</span><span class="rule"></span></div>
+    <h2>$3.5M seed to own the 2027 filing cycle</h2>
+    <div class="split">
+      <div class="body">
+        <p>The round funds eighteen months of engineering and go-to-market, timed to the SB 253 Scope 3 window and the CSRD reporting wave behind it.</p>
+        <p>Milestones: ten live connectors, twenty-five paying accounts, the first SB 253 export used in a real filing, and one assurance letter signed.</p>
+      </div>
+      <div class="aside">
+        <div class="q serif">Timing is the whole argument. The mandate has a date and it is close.</div>
+      </div>
+    </div>
+    <div class="funds">
+      <div class="fund"><span>Engineering, reconstruction and assurance</span><div class="bar"><i style="width:45%"></i></div><span class="pct">45%</span></div>
+      <div class="fund"><span>Go to market</span><div class="bar"><i style="width:30%"></i></div><span class="pct">30%</span></div>
+      <div class="fund"><span>Partnerships and certification</span><div class="bar"><i style="width:15%"></i></div><span class="pct">15%</span></div>
+      <div class="fund"><span>Operations</span><div class="bar"><i style="width:10%"></i></div><span class="pct">10%</span></div>
+    </div>
+  </section>
+
+  <div class="endfoot">
+    <span class="big">CORRI<b>DOR</b></span>
+    <span>Scope 3, categories 6 and 7<br>Investor discussion, confidential<br>Mock figures, illustrative</span>
+  </div>
+</div>
+
+<script>
+  function fit(){
+    var s = document.querySelector('.screen');
+    var f = document.getElementById('live');
+    if(!s || !f) return;
+    var scale = s.clientWidth / 1280;
+    f.style.setProperty('--s', scale);
+  }
+  window.addEventListener('resize', fit);
+  window.addEventListener('load', fit);
+  fit();
+</script>
+</body>
+</html>

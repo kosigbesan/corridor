@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Corridor, ingestion blueprint</title>
+<style>
+  :root{
+    --paper:#F7F2E9; --ink:#1C1711; --muted:#6B6152; --hair:#C6BBA6;
+    --rust:#B54A1E; --green:#2F5D46; --paper2:#FBF8F2;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;font-size:14px;line-height:1.5;}
+  .wrap{max-width:1000px;margin:0 auto;padding:34px 40px 70px;}
+  .serif{font-family:Georgia,"Palatino Linotype",serif;}
+  .masthead{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:2px solid var(--ink);padding-bottom:12px;}
+  .masthead h1{margin:0;font-family:Georgia,serif;font-size:30px;font-weight:normal;letter-spacing:-.01em;}
+  .masthead .meta{text-align:right;font-size:11px;color:var(--muted);letter-spacing:.04em;}
+  .folio{font-family:Georgia,serif;font-size:11px;color:var(--muted);letter-spacing:.18em;text-transform:uppercase;margin:30px 0 8px;}
+  .lede{font-family:Georgia,serif;font-size:18px;line-height:1.45;max-width:820px;margin:14px 0 6px;}
+  h2{font-family:Georgia,serif;font-weight:normal;font-size:20px;margin:38px 0 4px;}
+  .cap{font-size:12.5px;color:var(--muted);margin-bottom:14px;max-width:820px;}
+
+  table.t{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:6px;}
+  table.t th{text-align:left;font-weight:600;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);padding:0 12px 8px 0;border-bottom:1px solid var(--hair);vertical-align:bottom;}
+  table.t td{padding:10px 12px 10px 0;border-bottom:1px solid rgba(198,187,166,.55);vertical-align:top;}
+  table.t td:last-child,table.t th:last-child{padding-right:0;}
+  .mono{font-family:"Cascadia Mono",Consolas,monospace;font-size:11.5px;}
+
+  .rank{font-family:Georgia,serif;font-size:15px;color:var(--rust);}
+  .tag{display:inline-block;font-size:10px;letter-spacing:.06em;text-transform:uppercase;padding:2px 7px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap;}
+  .tag.open{color:var(--green);border-color:var(--green);}
+  .tag.gated{color:var(--rust);border-color:var(--rust);}
+  .tag.file{color:var(--muted);}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:30px;}
+  .card{border:1px solid var(--hair);padding:18px 20px;background:var(--paper2);margin-bottom:16px;}
+  .card h4{font-family:Georgia,serif;font-weight:normal;font-size:15px;margin:0 0 4px;}
+  .card .who{font-size:11px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);margin-bottom:10px;}
+  .card p{margin:0 0 8px;font-size:12.5px;color:var(--muted);}
+  .card p:last-child{margin-bottom:0;}
+  .card .kv{font-size:12px;margin:2px 0;}
+  .card .kv b{font-weight:600;color:var(--ink);}
+
+  .ladder{counter-reset:step;margin-top:8px;}
+  .ladder .step{display:grid;grid-template-columns:34px 1fr;gap:14px;padding:14px 0;border-bottom:1px solid rgba(198,187,166,.55);}
+  .ladder .step .n{font-family:Georgia,serif;font-size:22px;color:var(--rust);line-height:1;}
+  .ladder .step h4{margin:0 0 4px;font-size:14px;font-family:Georgia,serif;font-weight:normal;}
+  .ladder .step p{margin:0;font-size:12.5px;color:var(--muted);}
+
+  .flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--hair);margin-top:8px;}
+  .flow .col{padding:14px 16px;border-right:1px solid var(--hair);}
+  .flow .col:last-child{border-right:0;}
+  .flow .col .h{font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--rust);margin-bottom:8px;}
+  .flow .col ul{list-style:none;margin:0;padding:0;font-size:12px;color:var(--muted);}
+  .flow .col li{padding:3px 0;}
+
+  .callout{border-left:3px solid var(--rust);padding:2px 0 2px 16px;margin:18px 0;}
+  .callout .ct{font-family:Georgia,serif;font-size:15px;}
+  .callout .cb{font-size:12.5px;color:var(--muted);margin-top:5px;max-width:820px;}
+  .foot{margin-top:48px;border-top:1px solid var(--hair);padding-top:14px;font-size:11px;color:var(--muted);display:flex;justify-content:space-between;}
+  .ok{color:var(--green);}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="masthead">
+    <h1>Ingestion blueprint</h1>
+    <div class="meta">Corridor, internal<br>Scope 3 cat 6 and 7<br>Connector map, v0.1</div>
+  </div>
+
+  <div class="folio">00 / The uncomfortable truth</div>
+  <div class="lede serif">Most corporate travel emissions data does not arrive by API. It arrives as a scheduled CSV on an SFTP server, or a monthly PDF from a travel management company. The API is the aspiration, the file extract is the reality, and the product has to ingest both without pretending otherwise.</div>
+  <p class="cap">The itinerary itself lives one layer down, in a GDS passenger name record held by the TMC. Everything above it, the booking tools and expense platforms, is a reseller of that record. So the connector strategy is really three strategies stacked: reach the booking record, reach the HR record, and accept the file when neither is on offer.</p>
+
+  <h2>Where each feed comes from</h2>
+  <p class="cap">Ranked by how much of the two categories they actually unlock. Access column reflects what a customer's own data requires versus what a resold multi-tenant app requires.</p>
+  <table class="t">
+    <thead>
+      <tr><th>Source</th><th>Unlocks</th><th>Auth and endpoint</th><th>Access</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="rank">01</span> Booking tools<br><span class="mono">Amex GBT, Navan, Concur</span></td>
+        <td>Cat 6: air, cabin, hotel, rail, car. The itinerary in structured form</td>
+        <td class="mono">OAuth 2.0 client credentials.<br>GBT Get Trips API<br>Navan /v1/bookings<br>Concur Itinerary v4</td>
+        <td><span class="tag gated">Gated</span> approved app</td>
+      </tr>
+      <tr>
+        <td><span class="rank">02</span> HRIS<br><span class="mono">Workday, BambooHR, Personio, ADP</span></td>
+        <td>Cat 7: home location, work site, working pattern, the commute survey population</td>
+        <td class="mono">Workday RaaS report as web service, ISU basic auth or OAuth.<br>BambooHR and Personio API key.</td>
+        <td><span class="tag open">Customer-owned</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">03</span> Expense<br><span class="mono">Concur Expense, Expensify, Brex, Ramp, Coupa</span></td>
+        <td>Cat 6 fallback: spend for ground, taxi, rideshare, and any trip with no itinerary</td>
+        <td class="mono">OAuth 2.0. Concur expense.report.read, receipts.read</td>
+        <td><span class="tag open">Customer-owned</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">04</span> GDS record<br><span class="mono">Amadeus, Sabre, Travelport</span></td>
+        <td>Cat 6 deepest: raw PNR, segments, ticket numbers, fare class</td>
+        <td class="mono">PNR retrieval over SOAP or REST. Amadeus enterprise contract, Sabre PCC, Travelport TripServices</td>
+        <td><span class="tag gated">Contracted</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">05</span> Attendance and survey<br><span class="mono">Envoy, Kastle, survey tools</span></td>
+        <td>Cat 7 precision: actual office days, and mode plus distance per employee</td>
+        <td class="mono">REST or file. Badge events, survey responses</td>
+        <td><span class="tag open">Customer-owned</span></td>
+      </tr>
+      <tr>
+        <td><span class="rank">06</span> File extract<br><span class="mono">TMC SFTP, CSV, PDF invoice</span></td>
+        <td>Everything, when no API is on offer. The default for most programs today</td>
+        <td class="mono">SFTP drop, scheduled CSV, or emailed report</td>
+        <td><span class="tag file">Fallback</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <div class="ct serif">The gate is commercial, not technical</div>
+    <div class="cb">Every one of these APIs is documented and standards-based. The hard part is permission. Concur lets a client read its own data with a Client Web Services SKU and no certification, but a resold app that appears in the App Center needs a signed Partner Agreement and a full certification project. Navan opens expense and user data but keeps bookings and webhooks behind partner access. Amex GBT requires an approved developer app. Amadeus closed its self-service portal on 17 July 2026, so GDS access now starts with a contract.</div>
+  </div>
+
+  <h2>What the pipeline actually does</h2>
+  <p class="cap">Four stages. The middle one, reconstruction, is the product. It is also the part a competitor cannot copy from a screenshot.</p>
+  <div class="flow">
+    <div class="col">
+      <div class="h">Ingest</div>
+      <ul>
+        <li>OAuth connectors for live feeds</li>
+        <li>SFTP and CSV watchers</li>
+        <li>Idempotent by booking id</li>
+        <li>Back off on HTTP 429</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="h">Reconstruct</div>
+      <ul>
+        <li>Card line to itinerary</li>
+        <li>Great-circle distance, 8% uplift</li>
+        <li>Cabin from fare class</li>
+        <li>Haul band from distance</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="h">Quantify</div>
+      <ul>
+        <li>DEFRA, ICAO, IATA factors</li>
+        <li>Radiative forcing, fixed basis</li>
+        <li>Tier tag, primary or secondary</li>
+        <li>Unit and factor version</li>
+      </ul>
+    </div>
+    <div class="col">
+      <div class="h">Publish</div>
+      <ul>
+        <li>One canonical ledger</li>
+        <li>CSRD, SB 253, CDP export</li>
+        <li>Assurance trail</li>
+        <li>Ledger API</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="grid2" style="margin-top:34px;">
+    <div>
+      <h2>Connector notes</h2>
+      <div class="card">
+        <h4>SAP Concur</h4>
+        <div class="who">OAuth 2.0, three data centers</div>
+        <p><b>Itinerary v4</b> is the Cat 6 feed. Scope <span class="mono">travelallowance.itinerary.read</span>. The legacy <span class="mono">ITINER</span> scope still appears for older integrations.</p>
+        <p><b>Token care:</b> access token lasts one hour, refresh token six months. The base URI is geo-specific, so the connector has to store the returned geolocation per customer or calls fail.</p>
+        <p><b>Two doors:</b> client-owned data needs the Client Web Services SKU only. A multi-tenant App Center listing needs certification.</p>
+      </div>
+      <div class="card">
+        <h4>Navan</h4>
+        <div class="who">Self-serve credentials</div>
+        <p>The easiest to start with. An admin creates API credentials under Travel, Settings, Integrations, then hands over a client id and secret.</p>
+        <p>Token at <span class="mono">/ta-auth/oauth/token</span>, scopes <span class="mono">bookings:read users:read</span>. Bookings come back under <span class="mono">$.data[*]</span>, cursor paginated, with an <span class="mono">includeTransactions</span> flag for spend.</p>
+        <p><b>Limit:</b> bookings and webhooks are gated to partner access, so a customer's own read is the realistic first step.</p>
+      </div>
+      <div class="card">
+        <h4>Amex GBT</h4>
+        <div class="who">Developer portal and certification host</div>
+        <p>OAuth 2.0 client credentials against the developer host, with a separate certification host for testing. The <b>Get Trips API</b> returns trips and their segments across air, hotel, car and rail.</p>
+        <p>Requires a registered account and an approved app. Egencia, the GBT brand, publishes thirteen public OpenAPI documents but gates the runtime, so contracts are readable before access is granted.</p>
+      </div>
+    </div>
+    <div>
+      <h2 style="margin-top:0;">&nbsp;</h2>
+      <div class="card">
+        <h4>GDS, when you need the raw record</h4>
+        <div class="who">Amadeus, Sabre, Travelport</div>
+        <p>The PNR holds everything: segments, ticket numbers, fare class, sometimes aircraft type. A PNR conversion layer turns the raw record into structured JSON with distance and cabin already parsed.</p>
+        <p><b>Cost of entry:</b> Amadeus needs an enterprise contract and certification. Sabre needs a pseudo city code and a signed contract. Travelport reports around $5,000 a year. Aggregators exist that reach all three through one interface, which is the pragmatic route for a small team.</p>
+      </div>
+      <div class="card">
+        <h4>HRIS, the Cat 7 backbone</h4>
+        <div class="who">Workday, BambooHR, Personio, ADP</div>
+        <p>Workday exposes custom reports as a web service through RaaS, authenticated by an Integration System User with basic credentials or an OAuth token. BambooHR, Personio and ADP use API keys or OAuth, and ADP has a dedicated address API.</p>
+        <p><b>The only fields that matter:</b> home location, work site, working pattern, and a mode plus distance from a survey. Everything else is payroll noise.</p>
+      </div>
+      <div class="card">
+        <h4>Data minimisation</h4>
+        <div class="who">Home address is personal data</div>
+        <p>A home postcode is personally identifiable. Corridor geocodes it to a distance band at ingest and discards the raw address, then aggregates commute reporting at five or more employees per cell.</p>
+        <p>That is not only a privacy posture, it is what an assurer wants to see when the number is employee-derived.</p>
+      </div>
+    </div>
+  </div>
+
+  <h2>When no API is on offer</h2>
+  <p class="cap">The fallback ladder, in order of fidelity. A good product degrades gracefully rather than refusing the data.</p>
+  <div class="ladder">
+    <div class="step"><div class="n">1</div><div><h4>Live API, itinerary level</h4><p>Booking feed gives distance, cabin and mode. Tier one, primary data. This is the target state.</p></div></div>
+    <div class="step"><div class="n">2</div><div><h4>Scheduled file extract</h4><p>Monthly CSV from the TMC over SFTP, or the platform's own bulk export. Same fields, lower cadence. Still primary data.</p></div></div>
+    <div class="step"><div class="n">3</div><div><h4>Expense and card spend</h4><p>Dollars, not kilometres. Applies EEIO factors and tags the record secondary. Good enough to size the category, not to defend it.</p></div></div>
+    <div class="step"><div class="n">4</div><div><h4>Survey and national averages</h4><p>For Cat 7 with no HRIS feed, a travel survey plus published commuting averages. Explicitly labelled as estimated.</p></div></div>
+  </div>
+
+  <div class="callout">
+    <div class="ct serif">Build order</div>
+    <div class="cb">Start with Navan and Concur, because a customer can authorise their own data without a partnership, which means a live pilot in days rather than months. Add Amex GBT next, since the app approval is the long pole. Treat GDS as a year-two investment, reached through an aggregator until volume justifies a direct contract. HRIS is self-serve and unblocks Cat 7 entirely, so it should ship alongside the first travel connector, not after.</div>
+  </div>
+
+  <div class="foot"><span>Corridor, ingestion blueprint, mock</span><span>Sources v0.1</span></div>
+</div>
+</body>
+</html>
