@@ -68,7 +68,7 @@
 
   /* kpis */
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:22px;}
-  .kpi{background:var(--paper2);border:1px solid var(--hair);padding:22px 24px;}
+  .kpi{background:rgba(21,17,12,.045);border:0;border-radius:12px;padding:22px 24px;}
   .kpi .v{font-family:var(--serif);font-size:52px;line-height:.95;letter-spacing:-.03em;}
   .kpi .v .u{font-family:var(--sans);font-size:14px;color:var(--muted);margin-left:6px;letter-spacing:0;}
   .kpi .l{font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-top:12px;}
@@ -98,12 +98,12 @@
              color:var(--muted);padding:0 12px 10px 0;border-bottom:2px solid var(--ink);}
   table.t td{padding:12px 12px 12px 0;border-bottom:1px solid var(--hair2);vertical-align:top;}
   table.t td.num,table.t th.num{text-align:right;font-variant-numeric:tabular-nums;padding-right:0;}
-  .tag{display:inline-block;font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;
-       padding:3px 8px;border:1px solid var(--hair);color:var(--muted);white-space:nowrap;}
-  .tag.p{color:var(--green);border-color:#7FA189;}
-  .tag.s{color:var(--rust);border-color:#DCA07E;}
+  .tag{display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;
+       padding:4px 11px;border-radius:999px;border:0;background:rgba(21,17,12,.08);color:var(--muted);white-space:nowrap;}
+  .tag.p{background:var(--green);color:#F2EBDD;}
+  .tag.s{background:var(--rust);color:#F2EBDD;}
 
-  .note{border:1px solid var(--hair);background:var(--paper2);padding:18px 20px;margin-bottom:18px;}
+  .note{border:0;background:rgba(21,17,12,.045);border-radius:12px;padding:20px 22px;margin-bottom:18px;}
   .note h4{font-family:var(--serif);font-weight:normal;font-size:15px;margin:0 0 8px;}
   .note p{margin:0 0 10px;font-size:12.5px;color:var(--muted);}
   .note p:last-child{margin-bottom:0;}
@@ -116,14 +116,13 @@
   .chk li b{font-weight:700;}
   .chk .yes{color:var(--green);}
 
-  .switch{display:inline-flex;border:2px solid var(--ink);margin:0 0 20px;}
+  .switch{display:inline-flex;border-radius:999px;background:rgba(21,17,12,.08);padding:3px;margin:0 0 20px;}
   .switch button{background:none;border:0;font-family:var(--sans);font-size:12px;font-weight:600;
-                 padding:8px 18px;cursor:pointer;color:var(--ink);letter-spacing:.04em;}
+                 padding:8px 18px;cursor:pointer;color:var(--ink);letter-spacing:.04em;border-radius:999px;}
   .switch button.on{background:var(--ink);color:var(--cream);}
 
-  .tiers{display:grid;grid-template-columns:repeat(3,1fr);border-top:3px solid var(--ink);}
-  .tier{padding:26px 26px 30px;border-right:1px solid var(--hair2);}
-  .tier:last-child{border-right:0;}
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px;}
+  .tier{background:rgba(21,17,12,.045);border:0;border-radius:14px;padding:26px 28px 30px;}
   .tier.hi{background:var(--ink);color:var(--cream);}
   .tier.hi .tn,.tier.hi .tp{color:var(--cream);}
   .tier.hi .tu,.tier.hi li{color:rgba(246,240,228,.72);}
@@ -455,15 +454,18 @@
 
 <script>
   var navBtns = document.querySelectorAll('.nav button');
+  function show(id){
+    navBtns.forEach(function(x){ x.classList.toggle('on', x.dataset.v === id); });
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.toggle('on', v.id === id); });
+    window.scrollTo(0,0);
+  }
   navBtns.forEach(function(b){
-    b.addEventListener('click', function(){
-      navBtns.forEach(function(x){ x.classList.remove('on'); });
-      b.classList.add('on');
-      document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('on'); });
-      document.getElementById(b.dataset.v).classList.add('on');
-      window.scrollTo(0,0);
-    });
+    b.addEventListener('click', function(){ show(b.dataset.v); });
   });
+  if(location.hash){
+    var h = location.hash.slice(1);
+    if(document.getElementById(h)) show(h);
+  }
   var rfBtns = document.querySelectorAll('#rfswitch button');
   rfBtns.forEach(function(b){
     b.addEventListener('click', function(){

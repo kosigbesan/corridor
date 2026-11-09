@@ -50,7 +50,7 @@
   /* hero stat strip */
   .strip{background:var(--rust);color:var(--cream);padding:30px 0;}
   .strip .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
-  .strip .cell{background:rgba(0,0,0,.17);border:1px solid rgba(246,240,228,.24);padding:26px 28px;}
+  .strip .cell{background:rgba(0,0,0,.16);border:0;border-radius:12px;padding:26px 28px;}
   .strip .cv{font-family:var(--serif);font-size:clamp(34px,3.4vw,46px);line-height:1;letter-spacing:-.02em;}
   .strip .cl{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;margin-top:12px;color:rgba(246,240,228,.82);}
 
@@ -77,8 +77,8 @@
   .giantlbl{font-size:12px;letter-spacing:.14em;text-transform:uppercase;margin-top:20px;color:var(--muted);}
 
   .statrow{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:52px;}
-  .stat{background:var(--paper2);border:1px solid var(--hair);padding:26px 28px;}
-  .dark .stat{background:rgba(246,240,228,.06);border-color:var(--cream-hair);}
+  .stat{background:rgba(21,17,12,.045);border:0;border-radius:12px;padding:26px 28px;}
+  .dark .stat{background:rgba(246,240,228,.07);border:0;}
   .stat .v{font-family:var(--serif);font-size:clamp(42px,4.6vw,64px);line-height:.95;letter-spacing:-.03em;}
   .stat .v .u{font-size:.34em;color:var(--muted);margin-left:6px;letter-spacing:0;}
   .dark .stat .v .u{color:var(--cream-dim);}
@@ -111,8 +111,8 @@
 
   /* pricing */
   .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:10px;}
-  .tier{background:var(--paper2);border:1px solid var(--hair);padding:30px 32px 34px;}
-  .tier.hi{background:var(--ink);color:var(--cream);border-color:var(--ink);}
+  .tier{background:rgba(21,17,12,.045);border:0;border-radius:14px;padding:30px 32px 34px;}
+  .tier.hi{background:var(--ink);color:var(--cream);}
   .tier .tn{font-family:var(--serif);font-size:22px;}
   .tier .tp{font-family:var(--serif);font-size:clamp(40px,4.4vw,58px);margin:20px 0 6px;letter-spacing:-.04em;line-height:1;}
   .tier .tp small{font-family:var(--sans);font-size:12px;color:var(--muted);letter-spacing:0;}
@@ -127,8 +127,8 @@
 
   /* road */
   .road{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:10px;}
-  .road .ph{background:var(--paper2);border:1px solid var(--hair);padding:26px 28px;}
-  .rustbg .road .ph{background:rgba(0,0,0,.17);border-color:rgba(246,240,228,.24);}
+  .road .ph{background:rgba(21,17,12,.045);border:0;border-radius:12px;padding:26px 28px;}
+  .rustbg .road .ph{background:rgba(0,0,0,.16);border:0;}
   .road .when{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--rust);}
   .road .h{font-family:var(--serif);font-size:21px;margin:12px 0 10px;}
   .road p{margin:0;font-size:13.5px;color:var(--muted);}
@@ -230,7 +230,7 @@
     <p class="body" style="max-width:720px;margin:0 0 34px;font-size:16px;color:var(--ink2);">Corridor sits between the expense, travel, HR and badge feeds on one side and the disclosure platforms on the other, and owns the two categories end to end. The screen below is the product itself, not a picture of it.</p>
     <div class="device">
       <div class="bar"><i></i><i></i><i></i><span class="url">corridor.app / overview</span></div>
-      <div class="screen"><iframe id="live" src="app.html?v=3" title="Corridor product mockup"></iframe></div>
+      <div class="screen"><iframe id="live" src="app.html?v=5" title="Corridor product mockup"></iframe></div>
     </div>
     <div class="trio">
       <div><div class="h serif">Reconstruction</div><p>Turns a card line into route, cabin and haul band, so a spend figure becomes a distance-based number.</p></div>
